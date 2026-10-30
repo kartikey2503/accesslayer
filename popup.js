@@ -1,29 +1,40 @@
 
-const userInput = document.getElementById("userInput");
-const sendButton = document.getElementById("sendButton");
-const chatArea = document.getElementById("chatArea");
+// Find the status message area
+const statusMessage = document.getElementById("statusMessage");
 
-function sendMessage() {
-  const message = userInput.value.trim();
+// Find all popup buttons
+const guideButton = document.getElementById("guideButton");
+const largeTextButton = document.getElementById("largeTextButton");
+const contrastButton = document.getElementById("contrastButton");
+const keyboardButton = document.getElementById("keyboardButton");
+const focusButton = document.getElementById("focusButton");
 
-  if (message === "") {
-    return;
-  }
-
-  const userMessage = document.createElement("div");
-  userMessage.className = "message user-message";
-  userMessage.textContent = message;
-
-  chatArea.appendChild(userMessage);
-
-  userInput.value = "";
-  chatArea.scrollTop = chatArea.scrollHeight;
+// Update the status message
+function showStatus(message) {
+  statusMessage.textContent = message;
 }
 
-sendButton.addEventListener("click", sendMessage);
+// Guided mode
+guideButton.addEventListener("click", () => {
+  showStatus("Guided Mode integration is coming next!");
+});
 
-userInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    sendMessage();
-  }
+// Larger text
+largeTextButton.addEventListener("click", () => {
+  showStatus("Larger Text selected!");
+});
+
+// High contrast
+contrastButton.addEventListener("click", () => {
+  showStatus("High Contrast selected!");
+});
+
+// Keyboard help
+keyboardButton.addEventListener("click", () => {
+  showStatus("Keyboard Help selected!");
+});
+
+// Clear focus
+focusButton.addEventListener("click", () => {
+  showStatus("Clear Focus selected!");
 });
