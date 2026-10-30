@@ -1,0 +1,183 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 350px;
+  font-family: Arial, sans-serif;
+  background: #f4f7fc;
+  color: #1e293b;
+}
+
+.container {
+  padding: 20px;
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #2458a6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.header h1 {
+  font-size: 20px;
+}
+
+.tagline {
+  color: #64748b;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+/* Introduction */
+
+.intro {
+  margin-bottom: 18px;
+}
+
+.intro h2 {
+  font-size: 17px;
+  margin-bottom: 6px;
+}
+
+.intro p {
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* Guided mode */
+
+.guided-card {
+  background: white;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 22px;
+}
+
+.card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.card-heading h3 {
+  font-size: 16px;
+}
+
+.tag {
+  background: #eaf1ff;
+  color: #2458a6;
+  padding: 5px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+}
+
+.guided-card p {
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.primary-button {
+  width: 100%;
+  border: none;
+  background: #2458a6;
+  color: white;
+  padding: 12px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.primary-button:hover {
+  background: #194580;
+}
+
+/* Accessibility tools */
+
+.tools h3 {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.tool-button {
+  min-height: 78px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+  color: #334155;
+  font-size: 12px;
+}
+
+.tool-button:hover {
+  border-color: #2458a6;
+  background: #edf4ff;
+}
+
+.tool-icon {
+  font-size: 21px;
+  font-weight: bold;
+  color: #2458a6;
+}
+
+/* Keyboard focus */
+
+button:focus-visible {
+  outline: 3px solid #e59b22;
+  outline-offset: 3px;
+}
+
+/* Status and footer */
+
+.status {
+  margin-top: 17px;
+  padding: 9px;
+  background: #eaf1ff;
+  border-radius: 8px;
+  color: #2458a6;
+  font-size: 11px;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 11px;
+  color: #94a3b8;
+}

@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AccessLayer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <main class="container">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">A</div>
+      <div>
+        <h1>AccessLayer</h1>
+        <p class="tagline">Browse without barriers.</p>
+      </div>
+    </header>
+
+    <!-- Introduction -->
+    <section class="intro">
+      <h2>Make this page easier for you</h2>
+      <p>Choose the assistance you need.</p>
+    </section>
+
+    <!-- Main feature -->
+    <section class="guided-card">
+      <div class="card-heading">
+        <h3>Guided Mode</h3>
+        <span class="tag">Main feature</span>
+      </div>
+
+      <p>Get simple explanations and step-by-step help with forms.</p>
+
+      <button id="guideButton" class="primary-button">
+        Start Guided Mode
+      </button>
+    </section>
+
+    <!-- Accessibility controls -->
+    <section class="tools">
+      <h3>Quick accessibility tools</h3>
+
+      <div class="tool-grid">
+
+        <button class="tool-button" id="largeTextButton">
+          <span class="tool-icon">Aa</span>
+          <span>Larger Text</span>
+        </button>
+
+        <button class="tool-button" id="contrastButton">
+          <span class="tool-icon">◐</span>
+          <span>High Contrast</span>
+        </button>
+
+        <button class="tool-button" id="keyboardButton">
+          <span class="tool-icon">⌨</span>
+          <span>Keyboard Help</span>
+        </button>
+
+        <button class="tool-button" id="focusButton">
+          <span class="tool-icon">◎</span>
+          <span>Clear Focus</span>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- Status message -->
+    <p id="statusMessage" class="status" role="status" aria-live="polite">
+      AccessLayer is ready.
+    </p>
+
+    <footer>
+      Accessibility for everyone.
+    </footer>
+
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>
