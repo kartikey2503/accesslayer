@@ -12,8 +12,9 @@
     }
   },
   "action": {
-    "default_title": "AccessLayer"
-  },
+  "default_title": "AccessLayer",
+  "default_popup": "popup.html"
+},
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

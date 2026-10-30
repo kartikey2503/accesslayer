@@ -5,3 +5,73 @@
   outline: 3px solid #2563eb !important;
   outline-offset: 3px !important;
 }
+
+
+/* AccessLayer floating button */
+
+#accesslayer-floating-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 999999;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 30px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#accesslayer-floating-button:hover {
+  background: #1d4ed8;
+}
+
+
+
+/* AccessLayer assistant panel */
+
+#accesslayer-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 85px;
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  min-height: 180px;
+  padding: 20px;
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  z-index: 999999;
+  font-family: Arial, sans-serif;
+}
+
+#accesslayer-panel h3 {
+  margin: 0 0 14px;
+  color: #2563eb;
+  font-size: 20px;
+}
+
+#accesslayer-panel p {
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#accesslayer-panel button {
+  padding: 9px 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+#accesslayer-panel button:hover {
+  background: #1d4ed8;
+}
+

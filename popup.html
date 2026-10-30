@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AccessLayer Assistant</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div class="assistant-container">
+
+    <header class="assistant-header">
+      <h2>AccessLayer</h2>
+      <p>Your accessibility assistant</p>
+    </header>
+
+    <main class="chat-area" id="chatArea">
+      <div class="message assistant-message">
+        Hello! I'm AccessLayer.
+        How can I help you understand this webpage?
+      </div>
+    </main>
+
+    <footer class="chat-input-area">
+      <input
+        type="text"
+        id="userInput"
+        placeholder="Ask me anything about this page..."
+      >
+
+      <button id="sendButton">Send</button>
+    </footer>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
