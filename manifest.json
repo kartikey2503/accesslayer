@@ -1,0 +1,25 @@
+
+{
+  "manifest_version": 3,
+  "name": "AccessLayer",
+  "version": "1.0.0",
+  "description": "An adaptive accessibility assistant for websites.",
+  "permissions": ["activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "accesslayer@example.com"
+    }
+  },
+  "action": {
+    "default_title": "AccessLayer"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["guide.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
