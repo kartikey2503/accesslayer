@@ -41,3 +41,21 @@ function detectFormFields() {
 }
 
 detectFormFields();
+
+// Highlight the form field currently selected by the user
+
+document.addEventListener("focusin", (event) => {
+  const field = event.target;
+
+  if (field.matches("input, textarea, select")) {
+    field.classList.add("accesslayer-highlight");
+  }
+});
+
+document.addEventListener("focusout", (event) => {
+  const field = event.target;
+
+  if (field.matches("input, textarea, select")) {
+    field.classList.remove("accesslayer-highlight");
+  }
+});
