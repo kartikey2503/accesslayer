@@ -1,23 +1,25 @@
 
 console.log("AccessLayer is active!");
 
+const FIELD_SELECTOR = "input, textarea, select";
+
+// Get the accessible label of a form field
 function getFieldLabel(field) {
-  // Check whether the field has an associated label
   if (field.labels && field.labels.length > 0) {
-    return field.labels[0].innerText.trim();
+    return Array.from(field.labels)
+      .map((label) => label.innerText.trim())
+      .filter(Boolean)
+      .join(", ");
   }
 
-  // Check placeholder text
-  if (field.placeholder) {
-    return field.placeholder;
-  }
-
-  // Check accessible label
   if (field.getAttribute("aria-label")) {
     return field.getAttribute("aria-label");
   }
 
-  // Check name attribute
+  if (field.placeholder) {
+    return field.placeholder;
+  }
+
   if (field.name) {
     return field.name;
   }
@@ -25,10 +27,9 @@ function getFieldLabel(field) {
   return "Unlabelled field";
 }
 
+// Detect existing form fields
 function detectFormFields() {
-  const fields = document.querySelectorAll(
-    "input, textarea, select"
-  );
+  const fields = document.querySelectorAll(FIELD_SELECTOR);
 
   console.log("AccessLayer detected", fields.length, "fields.");
 
@@ -43,11 +44,10 @@ function detectFormFields() {
 detectFormFields();
 
 // Highlight the form field currently selected by the user
-
 document.addEventListener("focusin", (event) => {
   const field = event.target;
 
-  if (field.matches("input, textarea, select")) {
+  if (field.matches?.(FIELD_SELECTOR)) {
     field.classList.add("accesslayer-highlight");
   }
 });
@@ -55,33 +55,32 @@ document.addEventListener("focusin", (event) => {
 document.addEventListener("focusout", (event) => {
   const field = event.target;
 
-  if (field.matches("input, textarea, select")) {
+  if (field.matches?.(FIELD_SELECTOR)) {
     field.classList.remove("accesslayer-highlight");
   }
 });
 
+// Detect invalid fields, including dynamically added fields.
+// The capture option is needed because invalid events do not bubble.
+document.addEventListener(
+  "invalid",
+  (event) => {
+    const field = event.target;
 
-// Detect invalid form fields
-function detectFormErrors() {
-  const fields = document.querySelectorAll(
-    "input, textarea, select"
-  );
-
-  fields.forEach((field) => {
-    field.addEventListener("invalid", () => {
+    if (field.matches?.(FIELD_SELECTOR)) {
       console.log("AccessLayer detected a form error:", {
         label: getFieldLabel(field),
         message: field.validationMessage
       });
-    });
-  });
-}
+    }
+  },
+  true
+);
 
-detectFormErrors();
-
-
-
+// Observe dynamically added form fields
 function observeNewFormFields() {
+  if (!document.body) return;
+
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       mutation.addedNodes.forEach((node) => {
@@ -89,16 +88,14 @@ function observeNewFormFields() {
           return;
         }
 
-        if (node.matches("input, textarea, select")) {
+        if (node.matches(FIELD_SELECTOR)) {
           console.log(
             "AccessLayer detected a new field:",
             getFieldLabel(node)
           );
         }
 
-        const newFields = node.querySelectorAll(
-          "input, textarea, select"
-        );
+        const newFields = node.querySelectorAll(FIELD_SELECTOR);
 
         newFields.forEach((field) => {
           console.log(
@@ -118,15 +115,20 @@ function observeNewFormFields() {
 
 observeNewFormFields();
 
-
+// Get additional instructions associated with a field
 function getFieldInstructions(field) {
   const describedBy = field.getAttribute("aria-describedby");
 
   if (describedBy) {
-    const instruction = document.getElementById(describedBy);
+    const instructions = describedBy
+      .split(/\s+/)
+      .map((id) => document.getElementById(id))
+      .filter(Boolean)
+      .map((element) => element.innerText.trim())
+      .filter(Boolean);
 
-    if (instruction) {
-      return instruction.innerText.trim();
+    if (instructions.length > 0) {
+      return instructions.join(" ");
     }
   }
 
@@ -143,19 +145,16 @@ function getFieldInstructions(field) {
   return "No additional instructions";
 }
 
-
-
+// Collect form context without collecting user-entered values
 function collectFormContext() {
-  const fields = document.querySelectorAll(
-    "input, textarea, select"
-  );
+  const fields = document.querySelectorAll(FIELD_SELECTOR);
 
   const formContext = Array.from(fields).map((field) => ({
     label: getFieldLabel(field),
     type: field.type || field.tagName.toLowerCase(),
     placeholder: field.placeholder || "",
     required: field.required,
-    instructions: getFieldInstructions(field),
+    instructions: getFieldInstructions(field)
   }));
 
   console.log("AccessLayer complete form context:", formContext);
@@ -165,37 +164,34 @@ function collectFormContext() {
 
 collectFormContext();
 
-
+// Detect form groups
 function detectFormGroups() {
   const forms = document.querySelectorAll("form");
 
   const groups = Array.from(forms).map((form, index) => {
-    const heading = form.querySelector(
-      "h1, h2, h3, legend"
-    );
+    const heading = form.querySelector("h1, h2, h3, legend");
 
     const fields = Array.from(
-      form.querySelectorAll("input, textarea, select")
+      form.querySelectorAll(FIELD_SELECTOR)
     ).map((field) => getFieldLabel(field));
 
     return {
       formNumber: index + 1,
       heading: heading ? heading.innerText.trim() : "Form section",
-      fields: fields
+      fields
     };
   });
 
   console.log("AccessLayer form groups:", groups);
+
   return groups;
 }
 
 detectFormGroups();
 
-
+// Collect page headings
 function collectPageHeadings() {
-  const headings = document.querySelectorAll(
-    "h1, h2, h3, h4"
-  );
+  const headings = document.querySelectorAll("h1, h2, h3, h4");
 
   const pageHeadings = Array.from(headings).map((heading) => ({
     level: heading.tagName.toLowerCase(),
@@ -203,20 +199,20 @@ function collectPageHeadings() {
   }));
 
   console.log("AccessLayer page headings:", pageHeadings);
+
   return pageHeadings;
 }
 
 collectPageHeadings();
 
-
-
+// Detect page errors
 function collectPageErrors() {
   const errorSelectors = [
     '[role="alert"]',
     '[aria-invalid="true"]',
-    '.error',
-    '.error-message',
-    '.invalid-feedback'
+    ".error",
+    ".error-message",
+    ".invalid-feedback"
   ];
 
   const errorElements = document.querySelectorAll(
@@ -232,75 +228,56 @@ function collectPageErrors() {
     .filter((error) => error.text || error.label);
 
   console.log("AccessLayer page errors:", errors);
+
   return errors;
 }
 
 collectPageErrors();
 
-
-
+// Collect basic page information
 function collectPageInformation() {
   const pageInfo = {
     title: document.title,
     url: window.location.href,
     language: document.documentElement.lang || "Unknown",
     description:
-      document.querySelector('meta[name="description"]')
-        ?.content || "No description available"
+      document.querySelector('meta[name="description"]')?.content ||
+      "No description available"
   };
 
   console.log("AccessLayer page information:", pageInfo);
+
   return pageInfo;
 }
 
 collectPageInformation();
 
+// Listen for Guided Mode requests from the extension popup
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type !== "TOGGLE_GUIDE") {
+    return;
+  }
 
-// Create the AccessLayer floating button
+  try {
+    if (typeof toggleGuidedMode === "function") {
+      toggleGuidedMode();
 
-const floatingButton = document.createElement("button");
+      sendResponse({
+        success: true,
+        message: "Guided Mode request handled."
+      });
+    } else {
+      sendResponse({
+        success: false,
+        message: "Guided Mode is unavailable on this page."
+      });
+    }
+  } catch (error) {
+    console.error("AccessLayer Guided Mode error:", error);
 
-floatingButton.id = "accesslayer-floating-button";
-floatingButton.textContent = "AccessLayer";
-floatingButton.type = "button";
-
-// Create the assistant panel
-
-const assistantPanel = document.createElement("div");
-assistantPanel.id = "accesslayer-panel";
-assistantPanel.style.display = "none";
-
-const panelHeading = document.createElement("h3");
-panelHeading.textContent = "AccessLayer Assistant";
-
-const welcomeMessage = document.createElement("p");
-welcomeMessage.textContent =
-  "Hello! How can I help you understand this webpage?";
-
-const closeButton = document.createElement("button");
-closeButton.textContent = "Close";
-closeButton.type = "button";
-
-assistantPanel.appendChild(panelHeading);
-assistantPanel.appendChild(welcomeMessage);
-assistantPanel.appendChild(closeButton);
-
-// Open and close the assistant panel
-
-floatingButton.addEventListener("click", () => {
-  assistantPanel.style.display =
-    assistantPanel.style.display === "none" ? "block" : "none";
+    sendResponse({
+      success: false,
+      message: "Unable to start Guided Mode."
+    });
+  }
 });
-
-closeButton.addEventListener("click", () => {
-  assistantPanel.style.display = "none";
-});
-
-// Add everything to the webpage
-
-document.body.appendChild(floatingButton);
-document.body.appendChild(assistantPanel);
-
-
-
-
