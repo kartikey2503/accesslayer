@@ -1,40 +1,59 @@
-
 // Find the status message area
 const statusMessage = document.getElementById("statusMessage");
 
-// Find all popup buttons
+// Find the popup buttons
 const guideButton = document.getElementById("guideButton");
 const largeTextButton = document.getElementById("largeTextButton");
 const contrastButton = document.getElementById("contrastButton");
 const keyboardButton = document.getElementById("keyboardButton");
 const focusButton = document.getElementById("focusButton");
 
-// Update the status message
+// Show a message in the popup
 function showStatus(message) {
   statusMessage.textContent = message;
 }
 
-// Guided mode
+// Send a message to the content script in the active tab
+function sendMessageToActiveTab(message) {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+
+    if (!activeTab || !activeTab.id) {
+      showStatus("Could not find the active tab.");
+      return;
+    }
+
+    chrome.tabs.sendMessage(activeTab.id, message, (response) => {
+      if (chrome.runtime.lastError) {
+        showStatus(
+          "AccessLayer couldn't connect to this page. Try a normal website or reload the page."
+        );
+        return;
+      }
+
+      showStatus(response?.message || "Guided Mode toggled.");
+    });
+  });
+}
+
+// Guided Mode: popup.js → content.js → guide.js
 guideButton.addEventListener("click", () => {
-  showStatus("Guided Mode integration is coming next!");
+  sendMessageToActiveTab({ type: "TOGGLE_GUIDE" });
 });
 
-// Larger text
+// These controls are placeholders for now
 largeTextButton.addEventListener("click", () => {
-  showStatus("Larger Text selected!");
+  showStatus("Large Text is not connected yet.");
 });
 
-// High contrast
 contrastButton.addEventListener("click", () => {
-  showStatus("High Contrast selected!");
+  showStatus("High Contrast is not connected yet.");
 });
 
-// Keyboard help
 keyboardButton.addEventListener("click", () => {
-  showStatus("Keyboard Help selected!");
+  showStatus("Keyboard Navigation is not connected yet.");
 });
 
-// Clear focus
 focusButton.addEventListener("click", () => {
-  showStatus("Clear Focus selected!");
+  showStatus("Focus Highlight is not connected yet.");
 });
