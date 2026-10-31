@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccessLayer - Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>AccessLayer</h1>
+        <p>Making digital experiences easier for everyone.</p>
+    </header>
+
+    <main>
+        <section class="form-container">
+
+            <h2>Application Form</h2>
+            <p>Please fill in the details below.</p>
+
+            <form id="accessForm">
+
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Residential Address</label>
+                    <textarea
+                        id="address"
+                        name="address"
+                        placeholder="Enter your residential address"
+                        required
+                    ></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="applicationCategory">
+                        Application Category (Socioeconomic Classification)
+                    </label>
+
+                    <select id="applicationCategory" name="applicationCategory" required>
+                        <option value="">Select a category</option>
+                        <option value="general">General</option>
+                        <option value="reserved">Reserved</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <button type="submit">Submit Application</button>
+
+            </form>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>AccessLayer Demo Website</p>
+    </footer>
+
+</body>
+</html>
